@@ -16,7 +16,7 @@
     <style>
         body {
             font-family: 'Prompt', sans-serif;
-            background-color: #fcfbfe;
+            background-color: #fcf9f2;
         }
         .font-serif-title {
             font-family: 'Playfair Display', serif;
@@ -32,7 +32,7 @@
 <body class="text-slate-800 antialiased flex flex-col min-h-screen">
 
     <!-- Header / Navbar -->
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-purple-100 shadow-sm">
+    <header class="sticky top-0 z-40 bg-[#fcf9f2]/95 backdrop-blur-md border-b border-amber-200/60 shadow-sm">
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
             <!-- Logo -->
             <a href="#" class="flex items-center gap-3 group">
@@ -97,7 +97,7 @@
 
             <!-- 1. Committee Cards Section -->
             <section id="committee" class="space-y-10">
-                <div class="border-b border-purple-100 pb-3 flex justify-between items-end">
+                <div class="border-b border-amber-200/80 pb-3 flex justify-between items-end">
                     <div>
                         <span class="text-[11px] font-bold text-amber-600 tracking-widest uppercase">LEADERSHIP TEAM</span>
                         <h2 class="text-2xl sm:text-3xl font-bold text-purple-950">รายชื่อคณะกรรมการสภานักเรียน</h2>
@@ -112,7 +112,7 @@
 
             <!-- 2. News Section -->
             <section id="news" class="space-y-4">
-                <div class="border-b border-purple-100 pb-2">
+                <div class="border-b border-amber-200/80 pb-2">
                     <span class="text-[11px] font-bold text-amber-600 tracking-widest uppercase">UPDATE</span>
                     <h2 class="text-xl sm:text-2xl font-bold text-purple-950">ข่าวสารสภานักเรียน</h2>
                 </div>
@@ -121,7 +121,7 @@
 
             <!-- 3. Activities Section -->
             <section id="activities" class="space-y-4">
-                <div class="border-b border-purple-100 pb-2">
+                <div class="border-b border-amber-200/80 pb-2">
                     <span class="text-[11px] font-bold text-amber-600 tracking-widest uppercase">GALLERY</span>
                     <h2 class="text-xl sm:text-2xl font-bold text-purple-950">กิจกรรม</h2>
                 </div>
@@ -130,7 +130,7 @@
 
             <!-- 4. Projects Section -->
             <section id="projects" class="space-y-4">
-                <div class="border-b border-purple-100 pb-2">
+                <div class="border-b border-amber-200/80 pb-2">
                     <span class="text-[11px] font-bold text-amber-600 tracking-widest uppercase">INITIATIVES</span>
                     <h2 class="text-xl sm:text-2xl font-bold text-purple-950">โครงการและผลงาน</h2>
                 </div>
@@ -139,7 +139,7 @@
 
             <!-- 5. Notice Section -->
             <section id="notice" class="space-y-4">
-                <div class="border-b border-purple-100 pb-2">
+                <div class="border-b border-amber-200/80 pb-2">
                     <span class="text-[11px] font-bold text-amber-600 tracking-widest uppercase">NOTICE BOARD</span>
                     <h2 class="text-xl sm:text-2xl font-bold text-purple-950">ประกาศสภานักเรียน</h2>
                 </div>
@@ -186,7 +186,7 @@
 
     <!-- ADMIN MODAL / PANEL -->
     <div id="admin-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl w-full max-w-md max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-purple-100 transition-all">
+        <div id="admin-modal-box" class="bg-white rounded-2xl w-full max-w-md max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-purple-100 transition-all">
             
             <!-- Modal Header -->
             <div class="bg-purple-950 text-white px-6 py-4 flex justify-between items-center">
@@ -229,7 +229,7 @@
                 </form>
             </div>
 
-            <!-- Forgot Password View (Updated with New Password Fields) -->
+            <!-- Forgot Password View -->
             <div id="admin-forgot-view" class="p-6 sm:p-8 text-center space-y-4 hidden overflow-y-auto">
                 <div class="w-12 h-12 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center mx-auto text-xl">
                     <i class="fa-solid fa-key"></i>
@@ -273,7 +273,7 @@
             </div>
 
             <!-- Dashboard View -->
-            <div id="admin-dashboard-view" class="hidden flex-grow flex flex-col overflow-hidden w-full max-w-2xl">
+            <div id="admin-dashboard-view" class="hidden flex-grow flex flex-col overflow-hidden w-full">
                 <!-- User bar -->
                 <div class="bg-purple-900 text-purple-100 px-6 py-2 text-xs flex justify-between items-center">
                     <span><i class="fa-solid fa-circle-user text-amber-400 mr-1"></i> เข้าสู่ระบบในชื่อ: <b id="user-display">nextgen69.26@gmail.com</b></span>
@@ -321,9 +321,9 @@
 
     <script>
         const committeeTitles = [
-            "ประธานคณะกรรมการสภานักเรียน",
-            "รองประธานคณะกรรมการสภานักเรียน",
-            "รองประธานคณะกรรมการสภานักเรียน",
+            "ประธาน",
+            "รองประธาน",
+            "รองประธาน",
             "เลขานุการ",
             "ผู้ช่วยเลขานุการ",
             "เหรัญญิก",
@@ -353,9 +353,9 @@
                 groupName: "คณะกรรมการฝ่ายบริหาร",
                 badgeColor: "bg-purple-100 text-purple-900 border-purple-200",
                 items: [
-                    { id: 1, posId: 1, title: "ประธานคณะกรรมการสภานักเรียน", defaultName: "นายสมชาย ใจดี", defaultImg: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300" },
-                    { id: 2, posId: 2, title: "รองประธานคณะกรรมการสภานักเรียน", defaultName: "นางสาววิภาดา รักเรียน", defaultImg: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=300" },
-                    { id: 3, posId: 3, title: "รองประธานคณะกรรมการสภานักเรียน", defaultName: "นายแดง สุขสันต์", defaultImg: "https://via.placeholder.com/150" },
+                    { id: 1, posId: 1, title: "ประธาน", defaultName: "นายสมชาย ใจดี", defaultImg: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300" },
+                    { id: 2, posId: 2, title: "รองประธาน", defaultName: "นางสาววิภาดา รักเรียน", defaultImg: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=300" },
+                    { id: 3, posId: 3, title: "รองประธาน", defaultName: "นายแดง สุขสันต์", defaultImg: "https://via.placeholder.com/150" },
                     { id: 4, posId: 4, title: "เลขานุการ", defaultName: "ระบุชื่อ-นามสกุล", defaultImg: "https://via.placeholder.com/150" },
                     { id: 5, posId: 5, title: "ผู้ช่วยเลขานุการ", defaultName: "ระบุชื่อ-นามสกุล", defaultImg: "https://via.placeholder.com/150" },
                     { id: 6, posId: 6, title: "เหรัญญิก", defaultName: "ระบุชื่อ-นามสกุล", defaultImg: "https://via.placeholder.com/150" },
@@ -471,8 +471,12 @@
         }
 
         function saveData(data) {
-            localStorage.setItem('lwsc_data', JSON.stringify(data));
-            renderAllSections();
+            try {
+                localStorage.setItem('lwsc_data', JSON.stringify(data));
+                renderAllSections();
+            } catch (err) {
+                alert('ขนาดไฟล์รูปภาพใหญ่เกินไป กรุณาใช้รูปที่มีขนาดเล็กลง หรือใช้ลิงก์รูปภาพแทน');
+            }
         }
 
         let currentTab = 'committee';
@@ -482,7 +486,6 @@
         function renderAllSections() {
             const data = getData();
             
-            // Render Committee
             const commEl = document.getElementById('committee-list');
             if (commEl) {
                 let htmlStr = '';
@@ -516,7 +519,6 @@
                 commEl.innerHTML = htmlStr;
             }
 
-            // News
             const newsEl = document.getElementById('news-list');
             if (newsEl) {
                 newsEl.innerHTML = (!data.news || data.news.length === 0) ? `<div class="col-span-full bg-white rounded-xl p-8 text-center border text-slate-400 text-xs">ยังไม่มีข้อมูลข่าวสาร</div>` :
@@ -532,7 +534,6 @@
                     `).join('');
             }
 
-            // Activities
             const actEl = document.getElementById('activities-list');
             if (actEl) {
                 actEl.innerHTML = (!data.activities || data.activities.length === 0) ? `<div class="col-span-full bg-white rounded-xl p-8 text-center border text-slate-400 text-xs">ยังไม่มีข้อมูลกิจกรรม</div>` :
@@ -546,7 +547,6 @@
                     `).join('');
             }
 
-            // Projects
             const projEl = document.getElementById('projects-list');
             if (projEl) {
                 projEl.innerHTML = (!data.projects || data.projects.length === 0) ? `<div class="col-span-full bg-white rounded-xl p-8 text-center border text-slate-400 text-xs">ยังไม่มีข้อมูลโครงการ</div>` :
@@ -561,10 +561,9 @@
                     `).join('');
             }
 
-            // Notice
             const notEl = document.getElementById('notice-list');
             if (notEl) {
-                notEl.innerHTML = (!data.notice || data.notice.length === 0) ? `<div class="bg-white rounded-xl p-8 text-center border text-slate-400 text-xs">ยังไม่มีข้อมูลประกาศ</div>` :
+                notEl.innerHTML = (!data.notice || data.notice.length === 0) ? `<div class="col-span-full bg-white rounded-xl p-8 text-center border text-slate-400 text-xs">ยังไม่มีข้อมูลประกาศ</div>` :
                     (data.notice || []).map(item => `
                         <div class="bg-white rounded-xl p-4 border border-purple-50 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                             <div class="flex items-center gap-3">
@@ -578,7 +577,31 @@
         }
 
         function toggleAdminModal() {
-            document.getElementById('admin-modal').classList.toggle('hidden');
+            const modal = document.getElementById('admin-modal');
+            modal.classList.toggle('hidden');
+            
+            const isLoggedIn = localStorage.getItem('lwsc_logged_in') === 'true';
+            const modalBox = document.getElementById('admin-modal-box');
+            
+            if (!modal.classList.contains('hidden')) {
+                if (isLoggedIn) {
+                    document.getElementById('admin-login-view').classList.add('hidden');
+                    document.getElementById('admin-dashboard-view').classList.remove('hidden');
+                    document.getElementById('user-display').innerText = "nextgen69.26@gmail.com";
+                    if(modalBox) {
+                        modalBox.classList.remove('max-w-md');
+                        modalBox.classList.add('max-w-2xl');
+                    }
+                    renderAdminDashboard();
+                } else {
+                    document.getElementById('admin-login-view').classList.remove('hidden');
+                    document.getElementById('admin-dashboard-view').classList.add('hidden');
+                    if(modalBox) {
+                        modalBox.classList.remove('max-w-2xl');
+                        modalBox.classList.add('max-w-md');
+                    }
+                }
+            }
         }
 
         function togglePasswordVisibility(inputId, iconId) {
@@ -644,10 +667,11 @@
             const admin = getAdminAccount();
 
             if (email === admin.email && pass === admin.pass) {
+                localStorage.setItem('lwsc_logged_in', 'true');
                 document.getElementById('user-display').innerText = email;
                 document.getElementById('admin-login-view').classList.add('hidden');
                 document.getElementById('admin-dashboard-view').classList.remove('hidden');
-                const modalBox = document.querySelector('#admin-modal > div');
+                const modalBox = document.getElementById('admin-modal-box');
                 if(modalBox) {
                     modalBox.classList.remove('max-w-md');
                     modalBox.classList.add('max-w-2xl');
@@ -659,9 +683,10 @@
         }
 
         function logoutAdmin() {
+            localStorage.removeItem('lwsc_logged_in');
             document.getElementById('admin-login-view').classList.remove('hidden');
             document.getElementById('admin-dashboard-view').classList.add('hidden');
-            const modalBox = document.querySelector('#admin-modal > div');
+            const modalBox = document.getElementById('admin-modal-box');
             if(modalBox) {
                 modalBox.classList.remove('max-w-2xl');
                 modalBox.classList.add('max-w-md');
@@ -691,12 +716,39 @@
 
             const reader = new FileReader();
             reader.onload = function(evt) {
-                currentUploadedImageBase64 = evt.target.result;
-                const preview = document.getElementById('image-preview');
-                if (preview) {
-                    preview.src = currentUploadedImageBase64;
-                    preview.classList.remove('hidden');
-                }
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 300;
+                    const MAX_HEIGHT = 300;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    currentUploadedImageBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                    const preview = document.getElementById('image-preview');
+                    if (preview) {
+                        preview.src = currentUploadedImageBase64;
+                        preview.classList.remove('hidden');
+                    }
+                };
+                img.src = evt.target.result;
             };
             reader.readAsDataURL(file);
         }
@@ -753,37 +805,56 @@
 
             const itemsList = document.getElementById('admin-items-list');
             if(itemsList) {
-                itemsList.innerHTML = data.length === 0 ? `<p class="text-xs text-slate-400 py-2">ไม่มีข้อมูลในหมวดนี้</p>` :
-                    data.map(item => `
+                if(currentTab === 'committee') {
+                    itemsList.innerHTML = data.map(item => `
                         <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-purple-100 text-xs shadow-sm hover:border-purple-200 transition">
                             <div class="font-medium text-slate-800 truncate pr-2 flex items-center gap-3">
                                 ${item.image ? `<img src="${item.image}" class="w-10 h-10 rounded-full object-cover shrink-0 border">` : ''}
                                 <div class="truncate">
-                                    <p class="font-bold text-purple-950 text-xs sm:text-sm">${item.position ? `${item.positionId || ''}. ${item.position}` : item.title}</p>
-                                    <p class="text-[11px] text-purple-700 font-medium">${item.name || item.detail || ''}</p>
+                                    <p class="font-bold text-purple-950 text-xs sm:text-sm">${item.positionId || ''}. ${item.position}</p>
+                                    <p class="text-[11px] text-purple-700 font-medium">${item.name || ''}</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <button onclick="editAdminItem(${item.id})" class="px-2.5 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded-lg text-xs font-semibold transition flex items-center gap-1">
+                                <button type="button" onclick="editAdminItem(${item.positionId || item.id})" class="px-2.5 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded-lg text-xs font-semibold transition flex items-center gap-1">
                                     <i class="fa-solid fa-pen-to-square"></i> แก้ไข
                                 </button>
-                                <button onclick="deleteAdminItem(${item.id})" class="px-2.5 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg text-xs font-semibold transition flex items-center gap-1">
-                                    <i class="fa-solid fa-trash-can"></i> ลบ
+                                <button type="button" onclick="deleteAdminItem(${item.positionId || item.id})" class="px-2.5 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg text-xs font-semibold transition flex items-center gap-1">
+                                    <i class="fa-solid fa-trash-can"></i> รีเซ็ต
                                 </button>
                             </div>
                         </div>
                     `).join('');
+                } else {
+                    itemsList.innerHTML = data.length === 0 ? `<p class="text-xs text-slate-400 py-2">ไม่มีข้อมูลในหมวดนี้</p>` :
+                        data.map(item => `
+                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-purple-100 text-xs shadow-sm hover:border-purple-200 transition">
+                                <div class="font-medium text-slate-800 truncate pr-2 flex items-center gap-3">
+                                    ${item.image ? `<img src="${item.image}" class="w-10 h-10 rounded-full object-cover shrink-0 border">` : ''}
+                                    <div class="truncate">
+                                        <p class="font-bold text-purple-950 text-xs sm:text-sm">${item.title}</p>
+                                        <p class="text-[11px] text-purple-700 font-medium">${item.detail || item.date || ''}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1.5 shrink-0">
+                                    <button type="button" onclick="editAdminItem(${item.id})" class="px-2.5 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded-lg text-xs font-semibold transition flex items-center gap-1">
+                                        <i class="fa-solid fa-pen-to-square"></i> แก้ไข
+                                    </button>
+                                    <button type="button" onclick="deleteAdminItem(${item.id})" class="px-2.5 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg text-xs font-semibold transition flex items-center gap-1">
+                                        <i class="fa-solid fa-trash-can"></i> ลบ
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('');
+                }
             }
         }
 
         function deleteAdminItem(id) {
             const data = getData();
             if (currentTab === 'committee') {
-                const item = data.committee.find(i => i.id === id || i.positionId === id);
-                if (!item) return;
-                
                 data.committee = data.committee.map(i => {
-                    if (i.id === id || i.positionId === id) {
+                    if ((i.positionId || i.id) === id) {
                         return {
                             ...i,
                             name: "ระบุชื่อ-นามสกุล",
@@ -803,7 +874,7 @@
 
         function editAdminItem(id) {
             const data = getData()[currentTab] || [];
-            const item = data.find(i => i.id === id);
+            const item = data.find(i => (currentTab === 'committee' ? (i.positionId || i.id) === id : i.id === id));
             if (!item) return;
 
             editingItemId = id;
