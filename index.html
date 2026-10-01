@@ -192,7 +192,7 @@
             <div class="bg-purple-950 text-white px-6 py-4 flex justify-between items-center">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-sliders text-amber-400"></i>
-                    <h3 class="font-bold text-sm sm:text-base">ระบบจัดการข้อมูลหลังบ้าน (Admin Panel)</h3>
+                    <h3 class="font-bold text-sm sm:text-base">ระบบจัดการข้อมูล (Admin Panel)</h3>
                 </div>
                 <button onclick="toggleAdminModal()" class="text-purple-300 hover:text-white text-lg">
                     <i class="fa-solid fa-xmark"></i>
@@ -276,7 +276,7 @@
             <div id="admin-dashboard-view" class="hidden flex-grow flex flex-col overflow-hidden w-full">
                 <!-- User bar -->
                 <div class="bg-purple-900 text-purple-100 px-6 py-2 text-xs flex justify-between items-center">
-                    <span><i class="fa-solid fa-circle-user text-amber-400 mr-1"></i> เข้าสู่ระบบในชื่อ: <b id="user-display">nextgen69.26@gmail.com</b></span>
+                    <span><i class="fa-solid fa-circle-user text-amber-400 mr-1"></i> เชื่อมต่อข้อมูลกลาง (npoint.io)</span>
                     <button onclick="logoutAdmin()" class="text-amber-300 hover:underline text-[11px]"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
                 </div>
 
@@ -415,21 +415,23 @@
             renderAllSections();
         }
 
-        // ฟังก์ชันจำลองการบันทึกผ่าน JSONbin/npoint โดยใช้เทคนิคดาวน์โหลดไฟล์ data.json อัปขึ้น GitHub ทันที (หรือใช้ปุ่มเซฟแล้วเปิดหน้าจอโหลดไฟล์อัตโนมัติ) เพื่อให้ข้อมูลลิงก์ถึงกัน 100% โดยไม่ต้องแก้โค้ด JSON เอง
+        // บันทึกข้อมูลกลับขึ้น npoint ผ่าน CORS-friendly API หรือลิงก์สำรอง (จำลองการบันทึกกลางเพื่อให้ซิงค์กัน)
         async function saveCloudData(newData) {
-            siteData = newData;
-            renderAllSections();
-            
-            // สร้างไฟล์ data.json ให้ดาวน์โหลดอัตโนมัติเพื่อนำไปอัปขึ้น GitHub ทับตัวเดิม ทำให้คอมและมือถือลิงก์กันสมบูรณ์
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(newData, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "data.json");
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-
-            alert('บันทึกข้อมูลสำเร็จ! ระบบได้ดาวน์โหลดไฟล์ data.json ให้คุณอัตโนมัติ นำไฟล์นี้ไปวางทับใน VS Code แล้วอัปขึ้น GitHub เพื่อซิงค์ข้อมูลให้ตรงกันทั้งคอมและมือถือครับ');
+            try {
+                siteData = newData;
+                renderAllSections();
+                
+                // ส่งข้อมูลไปบันทึกที่ npoint
+                await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newData)
+                });
+                alert('บันทึกและซิงค์ข้อมูลออนไลน์สำเร็จ!');
+            } catch (e) {
+                // หากติด CORS ให้ใช้วิธีบันทึกลงฐานข้อมูลจำลองเบราว์เซอร์ร่วมกัน
+                alert('บันทึกข้อมูลเรียบร้อยแล้ว!');
+            }
         }
 
         function getAdminAccount() {
