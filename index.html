@@ -320,32 +320,14 @@
     </div>
 
     <script>
+        const API_URL = "https://api.npoint.io/942ddc3c5f680033e5fc";
+
         const committeeTitles = [
-            "ประธาน",
-            "รองประธาน",
-            "รองประธาน",
-            "เลขานุการ",
-            "ผู้ช่วยเลขานุการ",
-            "เหรัญญิก",
-            "ผู้ช่วยเหรัญญิก",
-            "หัวหน้าประชาสัมพันธ์",
-            "รองประชาสัมพันธ์",
-            "กรรมการประชาสัมพันธ์",
-            "หัวหน้ากิจกรรม",
-            "รองกิจกรรม",
-            "กรรมการกิจกรรม",
-            "หัวหน้าวิชาการ",
-            "รองวิชาการ",
-            "กรรมการวิชาการ",
-            "หัวหน้าะเบียบวินัย",
-            "รองระเบียบวินัย",
-            "กรรมการระเบียบวินัย",
-            "หัวหน้าสวัสดิการ",
-            "รองสวัสดิการ",
-            "กรรมการสวัสดิการ",
-            "หัวหน้าปฏิคม/ต้อนรับ",
-            "รองปฏิคม/ต้อนรับ",
-            "กรรมการปฏิคม/ต้อนรับ"
+            "ประธาน", "รองประธาน", "รองประธาน", "เลขานุการ", "ผู้ช่วยเลขานุการ",
+            "เหรัญญิก", "ผู้ช่วยเหรัญญิก", "หัวหน้าประชาสัมพันธ์", "รองประชาสัมพันธ์", "กรรมการประชาสัมพันธ์",
+            "หัวหน้ากิจกรรม", "รองกิจกรรม", "กรรมการกิจกรรม", "หัวหน้าวิชาการ", "รองวิชาการ",
+            "กรรมการวิชาการ", "หัวหน้าะเบียบวินัย", "รองระเบียบวินัย", "กรรมการระเบียบวินัย", "หัวหน้าสวัสดิการ",
+            "รองสวัสดิการ", "กรรมการสวัสดิการ", "หัวหน้าปฏิคม/ต้อนรับ", "รองปฏิคม/ต้อนรับ", "กรรมการปฏิคม/ต้อนรับ"
         ];
 
         const committeeGroups = [
@@ -353,99 +335,100 @@
                 groupName: "คณะกรรมการฝ่ายบริหาร",
                 badgeColor: "bg-purple-100 text-purple-900 border-purple-200",
                 items: [
-                    { id: 1, posId: 1, title: "ประธาน", defaultName: "นายธนกฤต เที่ยงมณี", defaultImg: "https://i.ibb.co/1Yvsxcqt/1.png" },
-                    { id: 2, posId: 2, title: "รองประธาน", defaultName: "นางสาวณัฐภัทร ลอยมา", defaultImg: "https://i.ibb.co/9H8CbN90/16.png" },
-                    { id: 3, posId: 3, title: "รองประธาน", defaultName: "นางสาวณัฐมน ทองช่วย", defaultImg: "https://i.ibb.co/G4ZN6vbV/4.png" },
-                    { id: 4, posId: 4, title: "เลขานุการ", defaultName: "นางสาวอณัญญา พุ่มเสนาะ", defaultImg: "https://i.ibb.co/nqSQ5nPr/5.png" },
-                    { id: 5, posId: 5, title: "ผู้ช่วยเลขานุการ", defaultName: "นายบุญญวัฒน์ นวลสุทธิ์", defaultImg: "https://i.ibb.co/7dM6PY2k/8.png" },
-                    { id: 6, posId: 6, title: "เหรัญญิก", defaultName: "นางสาวฐัติมา คงสุวรรณ", defaultImg: "https://i.ibb.co/DgPBkvww/18.png" },
-                    { id: 7, posId: 7, title: "ผู้ช่วยเหรัญญิก", defaultName: "นางสาวปิยธิดา คงชุม", defaultImg: "https://i.ibb.co/S4VXdyhx/19.png" }
+                    { id: 1, posId: 1, title: "ประธาน" },
+                    { id: 2, posId: 2, title: "รองประธาน" },
+                    { id: 3, posId: 3, title: "รองประธาน" },
+                    { id: 4, posId: 4, title: "เลขานุการ" },
+                    { id: 5, posId: 5, title: "ผู้ช่วยเลขานุการ" },
+                    { id: 6, posId: 6, title: "เหรัญญิก" },
+                    { id: 7, posId: 7, title: "ผู้ช่วยเหรัญญิก" }
                 ]
             },
             {
                 groupName: "ฝ่ายประชาสัมพันธ์",
                 badgeColor: "bg-indigo-100 text-indigo-900 border-indigo-200",
                 items: [
-                    { id: 8, posId: 8, title: "หัวหน้าประชาสัมพันธ์", defaultName: "นายภานุวัฒน์ แตงเลี่ยน", defaultImg: "https://i.ibb.co/nqBvjWMP/12.png" },
-                    { id: 9, posId: 9, title: "รองประชาสัมพันธ์", defaultName: "นางสาวจิราพัชร จิยาเพชร", defaultImg: "https://i.ibb.co/DD9myb9G/17.png" },
-                    { id: 10, posId: 10, title: "กรรมการประชาสัมพันธ์", defaultName: "นางสาวเขมนิจ ชูแสง", defaultImg: "https://i.ibb.co/B24qBr5N/23.png" }
+                    { id: 8, posId: 8, title: "หัวหน้าประชาสัมพันธ์" },
+                    { id: 9, posId: 9, title: "รองประชาสัมพันธ์" },
+                    { id: 10, posId: 10, title: "กรรมการประชาสัมพันธ์" }
                 ]
             },
             {
                 groupName: "ฝ่ายกิจกรรม",
                 badgeColor: "bg-amber-100 text-amber-900 border-amber-200",
                 items: [
-                    { id: 11, posId: 11, title: "หัวหน้ากิจกรรม", defaultName: "นายพุฒิพงศ์ บุญคง", defaultImg: "https://i.ibb.co/g8SHH16/2.png" },
-                    { id: 12, posId: 12, title: "รองกิจกรรม", defaultName: "นายณรงค์ฤทธิ์ มีชัยโย", defaultImg: "https://i.ibb.co/wZNsg57K/7.png" },
-                    { id: 13, posId: 13, title: "กรรมการกิจกรรม", defaultName: "นายธนกฤต ทองศรี", defaultImg: "https://i.ibb.co/DfPFK7yc/9.png" }
+                    { id: 11, posId: 11, title: "หัวหน้ากิจกรรม" },
+                    { id: 12, posId: 12, title: "รองกิจกรรม" },
+                    { id: 13, posId: 13, title: "กรรมการกิจกรรม" }
                 ]
             },
             {
                 groupName: "ฝ่ายวิชาการ",
                 badgeColor: "bg-blue-100 text-blue-900 border-blue-200",
                 items: [
-                    { id: 14, posId: 14, title: "หัวหน้าวิชาการ", defaultName: "นางสาวเกวลิน ทองคำ", defaultImg: "https://i.ibb.co/VfcMxDv/14.png" },
-                    { id: 15, posId: 15, title: "รองวิชาการ", defaultName: "นางสาวทิตฐิตา ราชพิทักษ์", defaultImg: "https://i.ibb.co/d4qgq8RC/24.png" },
-                    { id: 16, posId: 16, title: "กรรมการวิชาการ", defaultName: "นางสาวกัญญาัฐ อันทองสุก", defaultImg: "https://i.ibb.co/r2mt7PMn/22.png" }
+                    { id: 14, posId: 14, title: "หัวหน้าวิชาการ" },
+                    { id: 15, posId: 15, title: "รองวิชาการ" },
+                    { id: 16, posId: 16, title: "กรรมการวิชาการ" }
                 ]
             },
             {
                 groupName: "ฝ่ายระเบียบวินัย",
                 badgeColor: "bg-rose-100 text-rose-900 border-rose-200",
                 items: [
-                    { id: 17, posId: 17, title: "หัวหน้าะเบียบวินัย", defaultName: "นายสุเมธ กัลชนะ", defaultImg: "https://i.ibb.co/jPFh3HjR/11.png" },
-                    { id: 18, posId: 18, title: "รองระเบียบวินัย", defaultName: "นางสาวชนาการต์ รัตนพิศ", defaultImg: "https://i.ibb.co/ksnksN5t/21.png" },
-                    { id: 19, posId: 19, title: "กรรมการระเบียบวินัย", defaultName: "นางสาวปาณิสรา โสมปาน", defaultImg: "https://i.ibb.co/HTfjNVGY/image.png" }
+                    { id: 17, posId: 17, title: "หัวหน้าะเบียบวินัย" },
+                    { id: 18, posId: 18, title: "รองระเบียบวินัย" },
+                    { id: 19, posId: 19, title: "กรรมการระเบียบวินัย" }
                 ]
             },
             {
                 groupName: "ฝ่ายสวัสดิการ",
                 badgeColor: "bg-teal-100 text-teal-900 border-teal-200",
                 items: [
-                    { id: 20, posId: 20, title: "หัวหน้าสวัสดิการ", defaultName: "นางสาวนภัส ศรีนำ", defaultImg: "https://i.ibb.co/VpHRxKzB/15.png" },
-                    { id: 21, posId: 21, title: "รองสวัสดิการ", defaultName: "นางสาวพิมลวรรณ บุญช่วย", defaultImg: "https://i.ibb.co/BHsrzh3M/6.png" },
-                    { id: 22, posId: 22, title: "กรรมการสวัสดิการ", defaultName: "ระบุชื่อ-นามสกุล", defaultImg: "https://i.ibb.co/Xk2tQ8PG/depositphotos-35717211-stock-illustration-vector-user-icon.webp" }
+                    { id: 20, posId: 20, title: "หัวหน้าสวัสดิการ" },
+                    { id: 21, posId: 21, title: "รองสวัสดิการ" },
+                    { id: 22, posId: 22, title: "กรรมการสวัสดิการ" }
                 ]
             },
             {
                 groupName: "ฝ่ายปฏิคม/ต้อนรับ",
                 badgeColor: "bg-emerald-100 text-emerald-900 border-emerald-200",
                 items: [
-                    { id: 23, posId: 23, title: "หัวหน้าปฏิคม/ต้อนรับ", defaultName: "นางสาวกัญญ์วราพร ใจสว่าง", defaultImg: "https://i.ibb.co/nqj1jMBP/10.png" },
-                    { id: 24, posId: 24, title: "รองปฏิคม/ต้อนรับ", defaultName: "นางสาวปณิดา แสงอรุณ", defaultImg: "https://i.ibb.co/W44LscCD/13.png" },
-                    { id: 25, posId: 25, title: "กรรมการปฏิคม/ต้อนรับ", defaultName: "นางสาวสุชาดา นวลย้ง", defaultImg: "https://i.ibb.co/0yx5xWTW/3.png" }
+                    { id: 23, posId: 23, title: "หัวหน้าปฏิคม/ต้อนรับ" },
+                    { id: 24, posId: 24, title: "รองปฏิคม/ต้อนรับ" },
+                    { id: 25, posId: 25, title: "กรรมการปฏิคม/ต้อนรับ" }
                 ]
             }
         ];
 
-        const defaultCommittee = [];
-        committeeGroups.forEach(grp => {
-            grp.items.forEach(item => {
-                defaultCommittee.push({
-                    id: item.id,
-                    positionId: item.posId,
-                    position: item.title,
-                    name: item.defaultName,
-                    image: item.defaultImg
-                });
-            });
-        });
+        let cachedData = { committee: [], news: [], activities: [], projects: [], notice: [] };
 
-        const initialData = {
-            committee: defaultCommittee,
-            news: [
-                { id: 1, title: "รับสมัครคณะกรรมการสภานักเรียน ประจำปี 2569", detail: "เปิดรับสมัครนักเรียนที่สนใจเข้าร่วมทำงานสภานักเรียน", date: "2026-10-01" }
-            ],
-            activities: [
-                { id: 1, title: "กิจกรรมวันไหว้ครู ประจำปีการศึกษา 2569", image: "bg.jpg" }
-            ],
-            projects: [
-                { id: 1, title: "โครงการตู้ปณ. สภานักเรียน รับฟังเสียงเรียน", detail: "โครงการสำหรับรับข้อเสนอแนะของนักเรียน" }
-            ],
-            notice: [
-                { id: 1, title: "งดใช้สนามฟุตบอลชั่วคราวเนื่องจากปรับปรุงพื้นที่", date: "2026-10-01" }
-            ]
-        };
+        async function fetchCloudData() {
+            try {
+                const res = await fetch(API_URL);
+                const json = await res.json();
+                if (json && json.committee) {
+                    cachedData = json;
+                }
+            } catch (e) {
+                console.error("Fetch error:", e);
+            }
+            renderAllSections();
+        }
+
+        async function saveCloudData(newData) {
+            try {
+                cachedData = newData;
+                await fetch(API_URL, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newData)
+                });
+                renderAllSections();
+                alert('บันทึกข้อมูลและซิงค์ออนไลน์สำเร็จ!');
+            } catch (e) {
+                alert('เกิดข้อผิดพลาดในการบันทึกข้อมูลออนไลน์');
+            }
+        }
 
         function getAdminAccount() {
             return {
@@ -454,44 +437,19 @@
             };
         }
 
-        function getData() {
-            try {
-                const saved = localStorage.getItem('lwsc_data');
-                if (!saved) return initialData;
-                const parsed = JSON.parse(saved);
-                if (!parsed.committee || !Array.isArray(parsed.committee) || parsed.committee.length !== 25) {
-                    localStorage.removeItem('lwsc_data');
-                    return initialData;
-                }
-                return parsed;
-            } catch (e) {
-                localStorage.removeItem('lwsc_data');
-                return initialData;
-            }
-        }
-
-        function saveData(data) {
-            try {
-                localStorage.setItem('lwsc_data', JSON.stringify(data));
-                renderAllSections();
-            } catch (err) {
-                alert('ขนาดไฟล์รูปภาพใหญ่เกินไป กรุณาใช้รูปที่มีขนาดเล็กลง หรือใช้ลิงก์รูปภาพแทน');
-            }
-        }
-
         let currentTab = 'committee';
         let currentUploadedImageBase64 = '';
         let editingItemId = null;
 
         function renderAllSections() {
-            const data = getData();
+            const data = cachedData;
             
             const commEl = document.getElementById('committee-list');
             if (commEl) {
                 let htmlStr = '';
                 committeeGroups.forEach(grp => {
                     const cardsHTML = grp.items.map(defItem => {
-                        const storedItem = (data.committee || []).find(c => (c.positionId || c.id) === defItem.posId) || defItem;
+                        const storedItem = (data.committee || []).find(c => (c.positionId || c.id) === defItem.posId) || { name: "ระบุชื่อ-นามสกุล", image: "https://via.placeholder.com/150", position: defItem.title };
                         return `
                             <div class="bg-white rounded-2xl p-4 border border-purple-50 shadow-sm flex items-center gap-4 transition hover:shadow-md hover:border-purple-200">
                                 <img src="${storedItem.image || 'https://via.placeholder.com/150'}" class="w-16 h-16 rounded-full object-cover border-2 border-amber-400 shrink-0 shadow-sm">
@@ -673,7 +631,7 @@
                 document.getElementById('admin-dashboard-view').classList.remove('hidden');
                 const modalBox = document.getElementById('admin-modal-box');
                 if(modalBox) {
-                    modalBox.classList.remove('max-w-md');
+                    modalBox.classList.remove('max-w-2xl');
                     modalBox.classList.add('max-w-2xl');
                 }
                 renderAdminDashboard();
@@ -755,7 +713,7 @@
 
         function renderAdminDashboard() {
             const fieldsContainer = document.getElementById('form-fields');
-            const data = getData()[currentTab] || [];
+            const data = cachedData[currentTab] || [];
             
             const fileUploadHTML = `
                 <div class="sm:col-span-2 space-y-1.5">
@@ -806,41 +764,40 @@
             const itemsList = document.getElementById('admin-items-list');
             if(itemsList) {
                 if(currentTab === 'committee') {
-                    itemsList.innerHTML = data.map(item => `
-                        <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-purple-100 text-xs shadow-sm hover:border-purple-200 transition">
-                            <div class="font-medium text-slate-800 truncate pr-2 flex items-center gap-3">
-                                ${item.image ? `<img src="${item.image}" class="w-10 h-10 rounded-full object-cover shrink-0 border">` : ''}
-                                <div class="truncate">
-                                    <p class="font-bold text-purple-950 text-xs sm:text-sm">${item.positionId || ''}. ${item.position}</p>
-                                    <p class="text-[11px] text-purple-700 font-medium">${item.name || ''}</p>
+                    itemsList.innerHTML = committeeTitles.map((title, idx) => {
+                        const posId = idx + 1;
+                        const found = (data.committee || []).find(c => (c.positionId || c.id) === posId) || { name: "ระบุชื่อ-นามสกุล" };
+                        return `
+                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-purple-100 text-xs shadow-sm">
+                                <div class="font-medium text-slate-800 truncate pr-2 flex items-center gap-3">
+                                    <div class="truncate">
+                                        <p class="font-bold text-purple-950 text-xs sm:text-sm">${posId}. ${title}</p>
+                                        <p class="text-[11px] text-purple-700 font-medium">${found.name}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1.5 shrink-0">
+                                    <button type="button" onclick="editAdminItem(${posId})" class="px-2.5 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded-lg text-xs font-semibold transition">
+                                        <i class="fa-solid fa-pen-to-square"></i> แก้ไข
+                                    </button>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-1.5 shrink-0">
-                                <button type="button" onclick="editAdminItem(${item.positionId || item.id})" class="px-2.5 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded-lg text-xs font-semibold transition flex items-center gap-1">
-                                    <i class="fa-solid fa-pen-to-square"></i> แก้ไข
-                                </button>
-                                <button type="button" onclick="deleteAdminItem(${item.positionId || item.id})" class="px-2.5 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg text-xs font-semibold transition flex items-center gap-1">
-                                    <i class="fa-solid fa-trash-can"></i> รีเซ็ต
-                                </button>
-                            </div>
-                        </div>
-                    `).join('');
+                        `;
+                    }).join('');
                 } else {
                     itemsList.innerHTML = data.length === 0 ? `<p class="text-xs text-slate-400 py-2">ไม่มีข้อมูลในหมวดนี้</p>` :
                         data.map(item => `
-                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-purple-100 text-xs shadow-sm hover:border-purple-200 transition">
+                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-purple-100 text-xs shadow-sm">
                                 <div class="font-medium text-slate-800 truncate pr-2 flex items-center gap-3">
-                                    ${item.image ? `<img src="${item.image}" class="w-10 h-10 rounded-full object-cover shrink-0 border">` : ''}
                                     <div class="truncate">
                                         <p class="font-bold text-purple-950 text-xs sm:text-sm">${item.title}</p>
                                         <p class="text-[11px] text-purple-700 font-medium">${item.detail || item.date || ''}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-1.5 shrink-0">
-                                    <button type="button" onclick="editAdminItem(${item.id})" class="px-2.5 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded-lg text-xs font-semibold transition flex items-center gap-1">
+                                    <button type="button" onclick="editAdminItem(${item.id})" class="px-2.5 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded-lg text-xs font-semibold transition">
                                         <i class="fa-solid fa-pen-to-square"></i> แก้ไข
                                     </button>
-                                    <button type="button" onclick="deleteAdminItem(${item.id})" class="px-2.5 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg text-xs font-semibold transition flex items-center gap-1">
+                                    <button type="button" onclick="deleteAdminItem(${item.id})" class="px-2.5 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg text-xs font-semibold transition">
                                         <i class="fa-solid fa-trash-can"></i> ลบ
                                     </button>
                                 </div>
@@ -851,55 +808,42 @@
         }
 
         function deleteAdminItem(id) {
-            const data = getData();
-            if (currentTab === 'committee') {
-                data.committee = data.committee.map(i => {
-                    if ((i.positionId || i.id) === id) {
-                        return {
-                            ...i,
-                            name: "ระบุชื่อ-นามสกุล",
-                            image: "https://via.placeholder.com/150"
-                        };
-                    }
-                    return i;
-                });
-            } else {
-                data[currentTab] = (data[currentTab] || []).filter(i => i.id !== id);
-            }
-
-            saveData(data);
+            let newData = JSON.parse(JSON.stringify(cachedData));
+            newData[currentTab] = (newData[currentTab] || []).filter(i => i.id !== id);
+            saveCloudData(newData);
             if (editingItemId === id) resetForm();
-            renderAdminDashboard();
         }
 
         function editAdminItem(id) {
-            const data = getData()[currentTab] || [];
-            const item = data.find(i => (currentTab === 'committee' ? (i.positionId || i.id) === id : i.id === id));
-            if (!item) return;
-
             editingItemId = id;
             document.getElementById('form-title').innerText = "แก้ไขข้อมูล";
             document.getElementById('editing-badge').classList.remove('hidden');
 
             if (currentTab === 'committee') {
                 const selectEl = document.getElementById('field-position-id');
-                if (selectEl) selectEl.value = item.positionId || item.id;
-                document.getElementById('field-name').value = item.name === "ระบุชื่อ-นามสกุล" ? '' : (item.name || '');
-            } else if (currentTab === 'news') {
-                document.getElementById('field-title').value = item.title || '';
-                document.getElementById('field-date').value = item.date || '';
-                document.getElementById('field-detail').value = item.detail || '';
-            } else if (currentTab === 'activities') {
-                document.getElementById('field-title').value = item.title || '';
-            } else if (currentTab === 'projects') {
-                document.getElementById('field-title').value = item.title || '';
-                document.getElementById('field-detail').value = item.detail || '';
-            } else if (currentTab === 'notice') {
-                document.getElementById('field-title').value = item.title || '';
-                document.getElementById('field-date').value = item.date || '';
+                if (selectEl) selectEl.value = id;
+                const found = (cachedData.committee || []).find(i => (i.positionId || i.id) === id);
+                document.getElementById('field-name').value = (found && found.name !== "ระบุชื่อ-นามสกุล") ? found.name : '';
+                currentUploadedImageBase64 = (found && found.image) ? found.image : '';
+            } else {
+                const item = (cachedData[currentTab] || []).find(i => i.id === id);
+                if (!item) return;
+                if (currentTab === 'news') {
+                    document.getElementById('field-title').value = item.title || '';
+                    document.getElementById('field-date').value = item.date || '';
+                    document.getElementById('field-detail').value = item.detail || '';
+                } else if (currentTab === 'activities') {
+                    document.getElementById('field-title').value = item.title || '';
+                } else if (currentTab === 'projects') {
+                    document.getElementById('field-title').value = item.title || '';
+                    document.getElementById('field-detail').value = item.detail || '';
+                } else if (currentTab === 'notice') {
+                    document.getElementById('field-title').value = item.title || '';
+                    document.getElementById('field-date').value = item.date || '';
+                }
+                currentUploadedImageBase64 = item.image || '';
             }
 
-            currentUploadedImageBase64 = item.image || '';
             const preview = document.getElementById('image-preview');
             if (preview && currentUploadedImageBase64) {
                 preview.src = currentUploadedImageBase64;
@@ -911,38 +855,51 @@
 
         function handleFormSubmit(e) {
             e.preventDefault();
-            const data = getData();
+            let newData = JSON.parse(JSON.stringify(cachedData));
 
             if (currentTab === 'committee') {
                 const selectedPosId = parseInt(document.getElementById('field-position-id').value);
                 const inputName = document.getElementById('field-name').value;
+                const posTitle = committeeTitles[selectedPosId - 1];
+
+                if (!newData.committee) newData.committee = [];
+                const index = newData.committee.findIndex(i => (i.positionId || i.id) === selectedPosId);
                 
-                const index = data.committee.findIndex(i => (i.positionId || i.id) === selectedPosId);
                 if (index !== -1) {
-                    data.committee[index].name = inputName;
+                    newData.committee[index].name = inputName;
+                    newData.committee[index].position = posTitle;
                     if (currentUploadedImageBase64) {
-                        data.committee[index].image = currentUploadedImageBase64;
+                        newData.committee[index].image = currentUploadedImageBase64;
                     }
+                } else {
+                    newData.committee.push({
+                        id: selectedPosId,
+                        positionId: selectedPosId,
+                        position: posTitle,
+                        name: inputName,
+                        image: currentUploadedImageBase64 || "https://via.placeholder.com/150"
+                    });
                 }
             } else {
+                if (!newData[currentTab]) newData[currentTab] = [];
                 if (editingItemId) {
-                    const index = data[currentTab].findIndex(i => i.id === editingItemId);
+                    const index = newData[currentTab].findIndex(i => i.id === editingItemId);
                     if (index !== -1) {
                         if (currentTab === 'news') {
-                            data[currentTab][index].title = document.getElementById('field-title').value;
-                            data[currentTab][index].date = document.getElementById('field-date').value;
-                            data[currentTab][index].detail = document.getElementById('field-detail').value;
+                            newData[currentTab][index].title = document.getElementById('field-title').value;
+                            newData[currentTab][index].date = document.getElementById('field-date').value;
+                            newData[currentTab][index].detail = document.getElementById('field-detail').value;
                         } else if (currentTab === 'activities') {
-                            data[currentTab][index].title = document.getElementById('field-title').value;
+                            newData[currentTab][index].title = document.getElementById('field-title').value;
                         } else if (currentTab === 'projects') {
-                            data[currentTab][index].title = document.getElementById('field-title').value;
-                            data[currentTab][index].detail = document.getElementById('field-detail').value;
+                            newData[currentTab][index].title = document.getElementById('field-title').value;
+                            newData[currentTab][index].detail = document.getElementById('field-detail').value;
                         } else if (currentTab === 'notice') {
-                            data[currentTab][index].title = document.getElementById('field-title').value;
-                            data[currentTab][index].date = document.getElementById('field-date').value;
+                            newData[currentTab][index].title = document.getElementById('field-title').value;
+                            newData[currentTab][index].date = document.getElementById('field-date').value;
                         }
                         if (currentUploadedImageBase64) {
-                            data[currentTab][index].image = currentUploadedImageBase64;
+                            newData[currentTab][index].image = currentUploadedImageBase64;
                         }
                     }
                 } else {
@@ -964,11 +921,11 @@
                         newItem.date = document.getElementById('field-date').value;
                         newItem.image = currentUploadedImageBase64 || '';
                     }
-                    data[currentTab].push(newItem);
+                    newData[currentTab].push(newItem);
                 }
             }
 
-            saveData(data);
+            saveCloudData(newData);
             resetForm();
             renderAdminDashboard();
         }
@@ -984,7 +941,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderAllSections();
+            fetchCloudData();
         });
     </script>
 </body>
