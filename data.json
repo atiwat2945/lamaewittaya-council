@@ -1,0 +1,42 @@
+{
+  "committee": [
+    { "id": 1, "positionId": 1, "position": "ประธาน", "name": "นายชนกฤต เที่ยงมณี", "image": "https://via.placeholder.com/150" },
+    { "id": 2, "positionId": 2, "position": "รองประธาน", "name": "นางสาวณัฐภัทร ลอยมา", "image": "https://via.placeholder.com/150" },
+    { "id": 3, "positionId": 3, "position": "รองประธาน", "name": "นางสาวณัฐมน ทองช่วย", "image": "https://via.placeholder.com/150" },
+    { "id": 4, "positionId": 4, "position": "เลขานุการ", "name": "นางสาวอณัญญา พุ่มเสนาะ", "image": "https://via.placeholder.com/150" },
+    { "id": 5, "positionId": 5, "position": "ผู้ช่วยเลขานุการ", "name": "นายบุญวัฒน์ นวลสุทธิ์", "image": "https://via.placeholder.com/150" },
+    { "id": 6, "positionId": 6, "position": "เหรัญญิก", "name": "นางสาวฐิติมา คงสุวรรณ", "image": "https://via.placeholder.com/150" },
+    { "id": 7, "positionId": 7, "position": "ผู้ช่วยเหรัญญิก", "name": "นางสาวปิยธิดา คงชุม", "image": "https://via.placeholder.com/150" },
+    { "id": 8, "positionId": 8, "position": "หัวหน้าประชาสัมพันธ์", "name": "นายภาุวิวัฒน์ แดงเลื่อน", "image": "https://via.placeholder.com/150" },
+    { "id": 9, "positionId": 9, "position": "รองประชาสัมพันธ์", "name": "นางสาวจิราพัชร จิยาเพชร", "image": "https://via.placeholder.com/150" },
+    { "id": 10, "positionId": 10, "position": "กรรมการประชาสัมพันธ์", "name": "นางสาวเขมณิจ ชูแสง", "image": "https://via.placeholder.com/150" },
+    { "id": 11, "positionId": 11, "position": "หัวหน้ากิจกรรม", "name": "นายพุฒิพงศ์ บุญคง", "image": "https://via.placeholder.com/150" },
+    { "id": 12, "positionId": 12, "position": "รองกิจกรรม", "name": "นายณรงค์ฤทธิ์ มีชัยโย", "image": "https://via.placeholder.com/150" },
+    { "id": 13, "positionId": 13, "position": "กรรมการกิจกรรม", "name": "นายธนกฤต ทองศรี", "image": "https://via.placeholder.com/150" },
+    { "id": 14, "positionId": 14, "position": "หัวหน้าวิชาการ", "name": "นางสาวเกวลิน ทองคำ", "image": "https://via.placeholder.com/150" },
+    { "id": 15, "positionId": 15, "position": "รองวิชาการ", "name": "นางสาวทิฆัมรา ราชพิทักษ์", "image": "https://via.placeholder.com/150" },
+    { "id": 16, "positionId": 16, "position": "กรรมการวิชาการ", "name": "นางสาวกัญญาณัฐ อั้นทองสุก", "image": "https://via.placeholder.com/150" },
+    { "id": 17, "positionId": 17, "position": "หัวหน้าะเบียบวินัย", "name": "นายสุเมธ ภัสนะ", "image": "https://via.placeholder.com/150" },
+    { "id": 18, "positionId": 18, "position": "รองระเบียบวินัย", "name": "นางสาวชนาการณ์ รัตนพิศ", "image": "https://via.placeholder.com/150" },
+    { "id": 19, "positionId": 19, "position": "กรรมการระเบียบวินัย", "name": "นางสาวปาณิศา โสมปาน", "image": "https://via.placeholder.com/150" },
+    { "id": 20, "positionId": 20, "position": "หัวหน้าสวัสดิการ", "name": "นางสาวนภัส ศรีน่า", "image": "https://via.placeholder.com/150" },
+    { "id": 21, "positionId": 21, "position": "รองสวัสดิการ", "name": "นางสาวพิมลวรรณ บุญช่วย", "image": "https://via.placeholder.com/150" },
+    { "id": 22, "positionId": 22, "position": "กรรมการสวัสดิการ", "name": "ระบุชื่อ-นามสกุล", "image": "https://via.placeholder.com/150" },
+    { "id": 23, "positionId": 23, "position": "หัวหน้าปฏิคม/ต้อนรับ", "name": "นางสาวกัญญ์วราพร ใจสว่าง", "image": "https://via.placeholder.com/150" },
+    { "id": 24, "positionId": 24, "position": "รองปฏิคม/ต้อนรับ", "name": "นางสาวปภัสดา แสงอรุณ", "image": "https://via.placeholder.com/150" },
+    { "id": 25, "positionId": 25, "position": "กรรมการปฏิคม/ต้อนรับ", "name": "นางสาวสุชาดา นวลย้ง", "image": "https://via.placeholder.com/150" }
+  ],
+  "news": [
+    { "id": 1, "title": "รับสมัครคณะกรรมการสภานักเรียน ประจำปี 2569", "detail": "เปิดรับสมัครนักเรียนที่สนใจเข้าร่วมทำงานสภานักเรียน", "date": "2026-10-01", "image": "" },
+    { "id": 2, "title": "ฟังผลสอบ", "detail": "วันที่ 2 ตุลาคม 2569 เนื่องจากเป็นวันผลการเรียนออก", "date": "2026-10-02", "image": "" }
+  ],
+  "activities": [
+    { "id": 1, "title": "กิจกรรมวันไหว้ครู ประจำปีการศึกษา 2569", "image": "bg.jpg" }
+  ],
+  "projects": [
+    { "id": 1, "title": "โครงการตู้ปณ. สภานักเรียน รับฟังเสียงเรียน", "detail": "โครงการสำหรับรับข้อเสนอแนะของนักเรียน", "image": "" }
+  ],
+  "notice": [
+    { "id": 1, "title": "งดใช้สนามฟุตบอลชั่วคราวเนื่องจากปรับปรุงพื้นที่", "date": "2026-10-01", "image": "" }
+  ]
+}
