@@ -438,22 +438,22 @@
 
         async function loadData() {
             try {
-                const { data, error } = await supabaseClient
-                    .from('site_data')
-                    .select('*')
-                    .limit(1);
-
-                if (error) {
-                    console.error("Supabase load error:", error);
-                }
-
-                if (data && data.length > 0 && data[0].content) {
-                    siteData = data[0].content;
+                // ใช้ Fetch ดึงข้อมูลตรงผ่าน REST API ของ Supabase เพื่อทะลุข้อจำกัด Client
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/site_data?select=*`, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    }
+                });
+                const rows = await res.json();
+                
+                if (rows && rows.length > 0 && rows[0].content) {
+                    siteData = rows[0].content;
                 } else {
                     siteData = initialData;
                 }
             } catch (e) {
-                console.error("Load connection error:", e);
+                console.error("Fetch data error:", e);
                 siteData = initialData;
             }
             renderAllSections();
@@ -464,26 +464,42 @@
             renderAllSections();
 
             try {
-                const { data: existing } = await supabaseClient.from('site_data').select('id').limit(1);
-                
-                if (existing && existing.length > 0) {
-                    const { error } = await supabaseClient
-                        .from('site_data')
-                        .update({ content: newData })
-                        .eq('id', existing[0].id);
-                    
-                    if (error) throw error;
+                const resGet = await fetch(`${SUPABASE_URL}/rest/v1/site_data?select=id`, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    }
+                });
+                const rows = await resGet.json();
+
+                if (rows && rows.length > 0) {
+                    const rowId = rows[0].id;
+                    await fetch(`${SUPABASE_URL}/rest/v1/site_data?id=eq.${rowId}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                            'Content-Type': 'application/json',
+                            'Prefer': 'return=minimal'
+                        },
+                        body: JSON.stringify({ content: newData })
+                    });
                 } else {
-                    const { error } = await supabaseClient
-                        .from('site_data')
-                        .insert([{ content: newData }]);
-                    
-                    if (error) throw error;
+                    await fetch(`${SUPABASE_URL}/rest/v1/site_data`, {
+                        method: 'POST',
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                            'Content-Type': 'application/json',
+                            'Prefer': 'return=minimal'
+                        },
+                        body: JSON.stringify({ content: newData })
+                    });
                 }
                 alert('บันทึกและซิงค์ข้อมูลออนไลน์สำเร็จทุกเครื่อง!');
             } catch (e) {
                 console.error("Save error:", e);
-                alert('เกิดข้อผิดพลาดในการบันทึกข้อมูลออนไลน์: ' + e.message);
+                alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล: ' + e.message);
             }
         }
 
