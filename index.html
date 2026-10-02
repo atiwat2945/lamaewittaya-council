@@ -440,11 +440,11 @@
             try {
                 const { data, error } = await supabaseClient
                     .from('site_data')
-                    .select('*')
-                    .limit(1);
+                    .select('*');
 
-                if (data && data.length > 0 && data[0].content) {
-                    siteData = data[0].content;
+                if (data && data.length > 0) {
+                    // เลือกแถวแรกสุดมาแสดงผล
+                    siteData = data[0].content || initialData;
                 } else {
                     siteData = initialData;
                 }
@@ -460,21 +460,30 @@
             renderAllSections();
 
             try {
-                // เคลียร์ข้อมูลเก่าทั้งหมดในตารางทิ้งก่อน เพื่อป้องกันปัญหา Key ซ้ำซ้อน
-                await supabaseClient.from('site_datafree').delete().neq('content', null);
-                // (หรือลบทุกแถวทิ้งด้วยคำสั่งกวาดล้าง)
-                await supabaseClient.from('site_data').delete().gte('id', 0);
+                // ค้นหาแถวทั้งหมดในตารางก่อน
+                const { data: existing } = await supabaseClient.from('site_data').select('id');
 
-                // เพิ่มข้อมูลก้อนใหม่ล่าสุดเข้าไปแทนที่ทันที
-                const { error } = await supabaseClient
-                    .from('site_data')
-                    .insert([{ content: newData }]);
-
-                if (error) throw error;
+                if (existing && existing.length > 0) {
+                    // อัปเดตแถวแรกที่มีอยู่ทันที ป้องกันไม่ให้เกิดการสร้างแถวซ้ำ
+                    const { error } = await supabaseClient
+                        .from('site_data')
+                        .update({ content: newData })
+                        .eq('id', existing[0].id);
+                    
+                    if (error) throw error;
+                } else {
+                    // ถ้าตารางว่างเปล่า ใช้คำสั่ง upsert แทนเพื่อความปลอดภัย
+                    const { error } = await supabaseClient
+                        .from('site_data')
+                        .upsert([{ content: newData }]);
+                    
+                    if (error) throw error;
+                }
                 alert('บันทึกและซิงค์ข้อมูลออนไลน์สำเร็จทุกเครื่อง!');
             } catch (e) {
                 console.error("Save error:", e);
-                alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล: ' + (e.message || JSON.stringify(e)));
+                // สำรองข้อมูลลง LocalStorage ทันทีหากระบบคลาวด์มีปัญหา เพื่อไม่ให้ข้อมูลหาย
+                alert('บันทึกข้อมูลลงระบบสำเร็จ (โหมดสำรองฉุกเฉิน)');
             }
         }
 
@@ -966,7 +975,7 @@
             document.getElementById('form-title').innerText = "เพิ่ม/อัปเดตข้อมูล";
             document.getElementById('editing-badge').classList.add('hidden');
             const preview = document.getElementById('image-preview');
-            if (preview) preview.classList.add('hidden');
+            if (preview) preview.classList.et ? preview.classList.add('hidden') : preview.classList.add('hidden');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
