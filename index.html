@@ -440,17 +440,20 @@
             try {
                 const { data, error } = await supabaseClient
                     .from('site_data')
-                    .select('content')
-                    .limit(1)
-                    .single();
+                    .select('*')
+                    .limit(1);
 
-                if (data && data.content) {
-                    siteData = data.content;
+                if (error) {
+                    console.error("Supabase load error:", error);
+                }
+
+                if (data && data.length > 0 && data[0].content) {
+                    siteData = data[0].content;
                 } else {
                     siteData = initialData;
                 }
             } catch (e) {
-                console.error("Load data error:", e);
+                console.error("Load connection error:", e);
                 siteData = initialData;
             }
             renderAllSections();
@@ -461,22 +464,26 @@
             renderAllSections();
 
             try {
-                const { data: existing } = await supabaseClient.from('site_data').select('id').limit(1).single();
+                const { data: existing } = await supabaseClient.from('site_data').select('id').limit(1);
                 
-                if (existing && existing.id) {
-                    await supabaseClient
+                if (existing && existing.length > 0) {
+                    const { error } = await supabaseClient
                         .from('site_data')
                         .update({ content: newData })
-                        .eq('id', existing.id);
+                        .eq('id', existing[0].id);
+                    
+                    if (error) throw error;
                 } else {
-                    await supabaseClient
+                    const { error } = await supabaseClient
                         .from('site_data')
                         .insert([{ content: newData }]);
+                    
+                    if (error) throw error;
                 }
                 alert('บันทึกและซิงค์ข้อมูลออนไลน์สำเร็จทุกเครื่อง!');
             } catch (e) {
                 console.error("Save error:", e);
-                alert('บันทึกข้อมูลสำเร็จ!');
+                alert('เกิดข้อผิดพลาดในการบันทึกข้อมูลออนไลน์: ' + e.message);
             }
         }
 
