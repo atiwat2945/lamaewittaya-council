@@ -438,7 +438,6 @@
 
         async function loadData() {
             try {
-                // ใช้ Fetch ดึงข้อมูลตรงผ่าน REST API ของ Supabase เพื่อทะลุข้อจำกัด Client
                 const res = await fetch(`${SUPABASE_URL}/rest/v1/site_data?select=*`, {
                     headers: {
                         'apikey': SUPABASE_ANON_KEY,
@@ -473,8 +472,9 @@
                 const rows = await resGet.json();
 
                 if (rows && rows.length > 0) {
+                    // อัปเดตแถวแรกที่มีอยู่แล้วทั้งหมดเพื่อป้องกันปัญหาซ้ำซ้อน
                     const rowId = rows[0].id;
-                    await fetch(`${SUPABASE_URL}/rest/v1/site_data?id=eq.${rowId}`, {
+                    const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/site_data?id=eq.${rowId}`, {
                         method: 'PATCH',
                         headers: {
                             'apikey': SUPABASE_ANON_KEY,
@@ -484,8 +484,9 @@
                         },
                         body: JSON.stringify({ content: newData })
                     });
+                    if (!patchRes.ok) throw new Error('Update failed');
                 } else {
-                    await fetch(`${SUPABASE_URL}/rest/v1/site_data`, {
+                    const postRes = await fetch(`${SUPABASE_URL}/rest/v1/site_data`, {
                         method: 'POST',
                         headers: {
                             'apikey': SUPABASE_ANON_KEY,
@@ -495,6 +496,7 @@
                         },
                         body: JSON.stringify({ content: newData })
                     });
+                    if (!postRes.ok) throw new Error('Insert failed');
                 }
                 alert('บันทึกและซิงค์ข้อมูลออนไลน์สำเร็จทุกเครื่อง!');
             } catch (e) {
