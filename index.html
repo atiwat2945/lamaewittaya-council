@@ -190,7 +190,7 @@
             <div class="bg-purple-950 text-white px-6 py-4 flex justify-between items-center">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-sliders text-amber-400"></i>
-                    <h3 class="font-bold text-sm sm:text-base">ระบบจัดการข้อมูล (npoint Cloud Sync)</h3>
+                    <h3 class="font-bold text-sm sm:text-base">ระบบจัดการข้อมูลกลาง (npoint Sync)</h3>
                 </div>
                 <button onclick="toggleAdminModal()" class="text-purple-300 hover:text-white text-lg">
                     <i class="fa-solid fa-xmark"></i>
@@ -316,8 +316,8 @@
     </div>
 
     <script>
-        // ใส่ลิงก์ API ของ npoint.io ที่คุณสร้างไว้ตรงนี้
-        const NPOINT_URL = "https://api.npoint.io/YOUR_NPOINT_API_ID";
+        // ใช้ลิงก์ npoint ของคุณโดยตรง
+        const NPOINT_URL = "https://api.npoint.io/942ddc3c5f680033e5fc";
 
         const committeeTitles = [
             "ประธาน", "รองประธาน", "รองประธาน", "เลขานุการ", "ผู้ช่วยเลขานุการ",
@@ -430,7 +430,7 @@
 
         async function loadData() {
             try {
-                const res = await fetch(NPOINT_URL);
+                const res = await fetch(NPOINT_URL + "?t=" + new Date().getTime());
                 const data = await res.json();
                 if (data && data.committee) {
                     siteData = data;
@@ -450,15 +450,15 @@
 
             try {
                 const res = await fetch(NPOINT_URL, {
-                    method: 'POST',
+                    method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(newData)
                 });
-                if (!res.ok) throw new Error('Failed to save to npoint');
-                alert('บันทึกและซิงค์ข้อมูลผ่าน npoint สำเร็จ!');
+                if (!res.ok) throw new Error('Failed to save');
+                alert('บันทึกข้อมูลสำเร็จ! ทุกคนเปิดลิงก์มาจะเห็นข้อมูลอัปเดตทันที');
             } catch (e) {
                 console.error("Save error:", e);
-                alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
+                alert('เกิดข้อผิดพลาดในการบันทึก');
             }
         }
 
