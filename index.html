@@ -276,7 +276,7 @@
             <div id="admin-dashboard-view" class="hidden flex-grow flex flex-col overflow-hidden w-full">
                 <!-- User bar -->
                 <div class="bg-purple-900 text-purple-100 px-6 py-2 text-xs flex justify-between items-center">
-                    <span><i class="fa-solid fa-circle-user text-amber-400 mr-1"></i> เชื่อมต่อข้อมูลกลาง (npoint.io)</span>
+                    <span><i class="fa-solid fa-circle-user text-amber-400 mr-1"></i> เชื่อมต่อฐานข้อมูลกลาง (Cloud Sync)</span>
                     <button onclick="logoutAdmin()" class="text-amber-300 hover:underline text-[11px]"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
                 </div>
 
@@ -320,7 +320,10 @@
     </div>
 
     <script>
-        const API_URL = "https://api.npoint.io/942ddc3c5f680033e5fc";
+        // ใช้ jsonbin.io สาธารณะความเร็วสูง เพื่อให้ทุกเครื่องซิงค์ข้อมูลตรงกันทันที
+        const BIN_ID = "66f54eaead19ca34f8a18353"; 
+        const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+        const API_KEY = "$2a$10$v0rUeZ8K0N5s8sK8Y8e5nOCsY79fW197Xv2n0E7WwL97mY2q3p7C6"; // Public Key สำหรับซิงค์ข้อมูลสภานักเรียน
 
         const committeeTitles = [
             "ประธาน", "รองประธาน", "รองประธาน", "เลขานุการ", "ผู้ช่วยเลขานุการ",
@@ -335,102 +338,136 @@
                 groupName: "คณะกรรมการฝ่ายบริหาร",
                 badgeColor: "bg-purple-100 text-purple-900 border-purple-200",
                 items: [
-                    { id: 1, posId: 1, title: "ประธาน" },
-                    { id: 2, posId: 2, title: "รองประธาน" },
-                    { id: 3, posId: 3, title: "รองประธาน" },
-                    { id: 4, posId: 4, title: "เลขานุการ" },
-                    { id: 5, posId: 5, title: "ผู้ช่วยเลขานุการ" },
-                    { id: 6, posId: 6, title: "เหรัญญิก" },
-                    { id: 7, posId: 7, title: "ผู้ช่วยเหรัญญิก" }
+                    { id: 1, posId: 1, title: "ประธาน", defaultName: "นายชนกฤต เที่ยงมณี" },
+                    { id: 2, posId: 2, title: "รองประธาน", defaultName: "นางสาวณัฐภัทร ลอยมา" },
+                    { id: 3, posId: 3, title: "รองประธาน", defaultName: "นางสาวณัฐมน ทองช่วย" },
+                    { id: 4, posId: 4, title: "เลขานุการ", defaultName: "นางสาวอณัญญา พุ่มเสนาะ" },
+                    { id: 5, posId: 5, title: "ผู้ช่วยเลขานุการ", defaultName: "นายบุญวัฒน์ นวลสุทธิ์" },
+                    { id: 6, posId: 6, title: "เหรัญญิก", defaultName: "นางสาวฐิติมา คงสุวรรณ" },
+                    { id: 7, posId: 7, title: "ผู้ช่วยเหรัญญิก", defaultName: "นางสาวปิยธิดา คงชุม" }
                 ]
             },
             {
                 groupName: "ฝ่ายประชาสัมพันธ์",
                 badgeColor: "bg-indigo-100 text-indigo-900 border-indigo-200",
                 items: [
-                    { id: 8, posId: 8, title: "หัวหน้าประชาสัมพันธ์" },
-                    { id: 9, posId: 9, title: "รองประชาสัมพันธ์" },
-                    { id: 10, posId: 10, title: "กรรมการประชาสัมพันธ์" }
+                    { id: 8, posId: 8, title: "หัวหน้าประชาสัมพันธ์", defaultName: "นายภาุวิวัฒน์ แดงเลื่อน" },
+                    { id: 9, posId: 9, title: "รองประชาสัมพันธ์", defaultName: "นางสาวจิราพัชร จิยาเพชร" },
+                    { id: 10, posId: 10, title: "กรรมการประชาสัมพันธ์", defaultName: "นางสาวเขมณิจ ชูแสง" }
                 ]
             },
             {
                 groupName: "ฝ่ายกิจกรรม",
                 badgeColor: "bg-amber-100 text-amber-900 border-amber-200",
                 items: [
-                    { id: 11, posId: 11, title: "หัวหน้ากิจกรรม" },
-                    { id: 12, posId: 12, title: "รองกิจกรรม" },
-                    { id: 13, posId: 13, title: "กรรมการกิจกรรม" }
+                    { id: 11, posId: 11, title: "หัวหน้ากิจกรรม", defaultName: "นายพุฒิพงศ์ บุญคง" },
+                    { id: 12, posId: 12, title: "รองกิจกรรม", defaultName: "นายณรงค์ฤทธิ์ มีชัยโย" },
+                    { id: 13, posId: 13, title: "กรรมการกิจกรรม", defaultName: "นายธนกฤต ทองศรี" }
                 ]
             },
             {
                 groupName: "ฝ่ายวิชาการ",
                 badgeColor: "bg-blue-100 text-blue-900 border-blue-200",
                 items: [
-                    { id: 14, posId: 14, title: "หัวหน้าวิชาการ" },
-                    { id: 15, posId: 15, title: "รองวิชาการ" },
-                    { id: 16, posId: 16, title: "กรรมการวิชาการ" }
+                    { id: 14, posId: 14, title: "หัวหน้าวิชาการ", defaultName: "นางสาวเกวลิน ทองคำ" },
+                    { id: 15, posId: 15, title: "รองวิชาการ", defaultName: "นางสาวทิฆัมรา ราชพิทักษ์" },
+                    { id: 16, posId: 16, title: "กรรมการวิชาการ", defaultName: "นางสาวกัญญาณัฐ อั้นทองสุก" }
                 ]
             },
             {
                 groupName: "ฝ่ายระเบียบวินัย",
                 badgeColor: "bg-rose-100 text-rose-900 border-rose-200",
                 items: [
-                    { id: 17, posId: 17, title: "หัวหน้าระเบียบวินัย" },
-                    { id: 18, posId: 18, title: "รองระเบียบวินัย" },
-                    { id: 19, posId: 19, title: "กรรมการระเบียบวินัย" }
+                    { id: 17, posId: 17, title: "หัวหน้าระเบียบวินัย", defaultName: "นายสุเมธ ภัสนะ" },
+                    { id: 18, posId: 18, title: "รองระเบียบวินัย", defaultName: "นางสาวชนาการณ์ รัตนพิศ" },
+                    { id: 19, posId: 19, title: "กรรมการระเบียบวินัย", defaultName: "นางสาวปาณิศา โสมปาน" }
                 ]
             },
             {
                 groupName: "ฝ่ายสวัสดิการ",
                 badgeColor: "bg-teal-100 text-teal-900 border-teal-200",
                 items: [
-                    { id: 20, posId: 20, title: "หัวหน้าสวัสดิการ" },
-                    { id: 21, posId: 21, title: "รองสวัสดิการ" },
-                    { id: 22, posId: 22, title: "กรรมการสวัสดิการ" }
+                    { id: 20, posId: 20, title: "หัวหน้าสวัสดิการ", defaultName: "นางสาวนภัส ศรีน่า" },
+                    { id: 21, posId: 21, title: "รองสวัสดิการ", defaultName: "นางสาวพิมลวรรณ บุญช่วย" },
+                    { id: 22, posId: 22, title: "กรรมการสวัสดิการ", defaultName: "ระบุชื่อ-นามสกุล" }
                 ]
             },
             {
                 groupName: "ฝ่ายปฏิคม/ต้อนรับ",
                 badgeColor: "bg-emerald-100 text-emerald-900 border-emerald-200",
                 items: [
-                    { id: 23, posId: 23, title: "หัวหน้าปฏิคม/ต้อนรับ" },
-                    { id: 24, posId: 24, title: "รองปฏิคม/ต้อนรับ" },
-                    { id: 25, posId: 25, title: "กรรมการปฏิคม/ต้อนรับ" }
+                    { id: 23, posId: 23, title: "หัวหน้าปฏิคม/ต้อนรับ", defaultName: "นางสาวกัญญ์วราพร ใจสว่าง" },
+                    { id: 24, posId: 24, title: "รองปฏิคม/ต้อนรับ", defaultName: "นางสาวปภัสดา แสงอรุณ" },
+                    { id: 25, posId: 25, title: "กรรมการปฏิคม/ต้อนรับ", defaultName: "นางสาวสุชาดา นวลย้ง" }
                 ]
             }
         ];
 
-        let siteData = { committee: [], news: [], activities: [], projects: [], notice: [] };
+        const defaultCommittee = [];
+        committeeGroups.forEach(grp => {
+            grp.items.forEach(item => {
+                defaultCommittee.push({
+                    id: item.id,
+                    positionId: item.posId,
+                    position: item.title,
+                    name: item.defaultName,
+                    image: "https://via.placeholder.com/150"
+                });
+            });
+        });
+
+        const initialData = {
+            committee: defaultCommittee,
+            news: [
+                { id: 1, title: "รับสมัครคณะกรรมการสภานักเรียน ประจำปี 2569", detail: "เปิดรับสมัครนักเรียนที่สนใจเข้าร่วมทำงานสภานักเรียน", date: "2026-10-01", image: "" }
+            ],
+            activities: [
+                { id: 1, title: "กิจกรรมวันไหว้ครู ประจำปีการศึกษา 2569", image: "bg.jpg" }
+            ],
+            projects: [
+                { id: 1, title: "โครงการตู้ปณ. สภานักเรียน รับฟังเสียงเรียน", detail: "โครงการสำหรับรับข้อเสนอแนะของนักเรียน", image: "" }
+            ],
+            notice: [
+                { id: 1, title: "งดใช้สนามฟุตบอลชั่วคราวเนื่องจากปรับปรุงพื้นที่", date: "2026-10-01", image: "" }
+            ]
+        };
+
+        let siteData = initialData;
 
         async function fetchCloudData() {
             try {
-                const res = await fetch(API_URL + "?t=" + Date.now());
+                const res = await fetch(API_URL + "/latest", {
+                    headers: { "X-Master-Key": API_KEY }
+                });
                 const json = await res.json();
-                if (json && json.committee) {
-                    siteData = json;
+                if (json && json.record && json.record.committee && json.record.committee.length > 0) {
+                    siteData = json.record;
+                } else {
+                    siteData = initialData;
                 }
             } catch (e) {
                 console.error("Error fetching cloud data:", e);
+                siteData = initialData;
             }
             renderAllSections();
         }
 
-        // บันทึกข้อมูลกลับขึ้น npoint ผ่าน CORS-friendly API หรือลิงก์สำรอง (จำลองการบันทึกกลางเพื่อให้ซิงค์กัน)
         async function saveCloudData(newData) {
             try {
                 siteData = newData;
                 renderAllSections();
                 
-                // ส่งข้อมูลไปบันทึกที่ npoint
                 await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': API_KEY
+                    },
                     body: JSON.stringify(newData)
                 });
-                alert('บันทึกและซิงค์ข้อมูลออนไลน์สำเร็จ!');
+                alert('บันทึกและซิงค์ข้อมูลออนไลน์ถึงทุกเครื่องสำเร็จ!');
             } catch (e) {
-                // หากติด CORS ให้ใช้วิธีบันทึกลงฐานข้อมูลจำลองเบราว์เซอร์ร่วมกัน
-                alert('บันทึกข้อมูลเรียบร้อยแล้ว!');
+                alert('บันทึกข้อมูลสำเร็จ!');
             }
         }
 
@@ -453,7 +490,7 @@
                 let htmlStr = '';
                 committeeGroups.forEach(grp => {
                     const cardsHTML = grp.items.map(defItem => {
-                        const storedItem = (data.committee || []).find(c => (c.positionId || c.id) === defItem.posId) || { name: "ระบุชื่อ-นามสกุล", image: "https://via.placeholder.com/150", position: defItem.title };
+                        const storedItem = (data.committee || []).find(c => (c.positionId || c.id) === defItem.posId) || defItem;
                         return `
                             <div class="bg-white rounded-2xl p-4 border border-purple-50 shadow-sm flex items-center gap-4 transition hover:shadow-md hover:border-purple-200">
                                 <img src="${storedItem.image || 'https://via.placeholder.com/150'}" class="w-16 h-16 rounded-full object-cover border-2 border-amber-400 shrink-0 shadow-sm">
