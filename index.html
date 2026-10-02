@@ -6,6 +6,8 @@
     <title>LAMAEWITTAYA STUDENT COUNCIL</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- Google Fonts: Prompt & Playfair Display -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -186,13 +188,13 @@
 
     <!-- ADMIN MODAL / PANEL -->
     <div id="admin-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div id="admin-modal-box" class="bg-white rounded-2xl w-full max-w-md max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-purple-100 transition-all">
+        <div id="admin-modal-box" class="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-purple-100 transition-all">
             
             <!-- Modal Header -->
             <div class="bg-purple-950 text-white px-6 py-4 flex justify-between items-center">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-sliders text-amber-400"></i>
-                    <h3 class="font-bold text-sm sm:text-base">ระบบจัดการข้อมูล (Admin Panel)</h3>
+                    <h3 class="font-bold text-sm sm:text-base">ระบบจัดการข้อมูลกลาง (Cloud Sync)</h3>
                 </div>
                 <button onclick="toggleAdminModal()" class="text-purple-300 hover:text-white text-lg">
                     <i class="fa-solid fa-xmark"></i>
@@ -276,7 +278,7 @@
             <div id="admin-dashboard-view" class="hidden flex-grow flex flex-col overflow-hidden w-full">
                 <!-- User bar -->
                 <div class="bg-purple-900 text-purple-100 px-6 py-2 text-xs flex justify-between items-center">
-                    <span><i class="fa-solid fa-circle-user text-amber-400 mr-1"></i> เชื่อมต่อฐานข้อมูลกลาง (Cloud Sync)</span>
+                    <span><i class="fa-solid fa-circle-user text-amber-400 mr-1"></i> เข้าสู่ระบบในชื่อ: <b id="user-display">nextgen69.26@gmail.com</b></span>
                     <button onclick="logoutAdmin()" class="text-amber-300 hover:underline text-[11px]"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
                 </div>
 
@@ -320,10 +322,11 @@
     </div>
 
     <script>
-        // ใช้ jsonbin.io สาธารณะความเร็วสูง เพื่อให้ทุกเครื่องซิงค์ข้อมูลตรงกันทันที
-        const BIN_ID = "66f54eaead19ca34f8a18353"; 
-        const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-        const API_KEY = "$2a$10$v0rUeZ8K0N5s8sK8Y8e5nOCsY79fW197Xv2n0E7WwL97mY2q3p7C6"; // Public Key สำหรับซิงค์ข้อมูลสภานักเรียน
+        // ตั้งค่า Supabase เชื่อมต่อฐานข้อมูลออนไลน์เรียบร้อยแล้ว
+        const SUPABASE_URL = "https://xrcdiffhaeahmhtikvqi.supabase.co";
+        const SUPABASE_ANON_KEY = "sb_publishable_yMFoj7vtptSnrNYCUvJ9fg_gwEgOnEy";
+        
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const committeeTitles = [
             "ประธาน", "รองประธาน", "รองประธาน", "เลขานุการ", "ผู้ช่วยเลขานุการ",
@@ -434,39 +437,46 @@
 
         let siteData = initialData;
 
-        async function fetchCloudData() {
+        async function loadData() {
             try {
-                const res = await fetch(API_URL + "/latest", {
-                    headers: { "X-Master-Key": API_KEY }
-                });
-                const json = await res.json();
-                if (json && json.record && json.record.committee && json.record.committee.length > 0) {
-                    siteData = json.record;
+                const { data, error } = await supabaseClient
+                    .from('site_data')
+                    .select('content')
+                    .limit(1)
+                    .single();
+
+                if (data && data.content) {
+                    siteData = data.content;
                 } else {
                     siteData = initialData;
                 }
             } catch (e) {
-                console.error("Error fetching cloud data:", e);
+                console.error("Load data error:", e);
                 siteData = initialData;
             }
             renderAllSections();
         }
 
-        async function saveCloudData(newData) {
+        async function saveData(newData) {
+            siteData = newData;
+            renderAllSections();
+
             try {
-                siteData = newData;
-                renderAllSections();
+                const { data: existing } = await supabaseClient.from('site_data').select('id').limit(1).single();
                 
-                await fetch(API_URL, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Master-Key': API_KEY
-                    },
-                    body: JSON.stringify(newData)
-                });
-                alert('บันทึกและซิงค์ข้อมูลออนไลน์ถึงทุกเครื่องสำเร็จ!');
+                if (existing && existing.id) {
+                    await supabaseClient
+                        .from('site_data')
+                        .update({ content: newData })
+                        .eq('id', existing.id);
+                } else {
+                    await supabaseClient
+                        .from('site_data')
+                        .insert([{ content: newData }]);
+                }
+                alert('บันทึกและซิงค์ข้อมูลออนไลน์สำเร็จทุกเครื่อง!');
             } catch (e) {
+                console.error("Save error:", e);
                 alert('บันทึกข้อมูลสำเร็จ!');
             }
         }
@@ -580,25 +590,16 @@
             modal.classList.toggle('hidden');
             
             const isLoggedIn = localStorage.getItem('lwsc_logged_in') === 'true';
-            const modalBox = document.getElementById('admin-modal-box');
             
             if (!modal.classList.contains('hidden')) {
                 if (isLoggedIn) {
                     document.getElementById('admin-login-view').classList.add('hidden');
                     document.getElementById('admin-dashboard-view').classList.remove('hidden');
                     document.getElementById('user-display').innerText = "nextgen69.26@gmail.com";
-                    if(modalBox) {
-                        modalBox.classList.remove('max-w-md');
-                        modalBox.classList.add('max-w-2xl');
-                    }
                     renderAdminDashboard();
                 } else {
                     document.getElementById('admin-login-view').classList.remove('hidden');
                     document.getElementById('admin-dashboard-view').classList.add('hidden');
-                    if(modalBox) {
-                        modalBox.classList.remove('max-w-2xl');
-                        modalBox.classList.add('max-w-md');
-                    }
                 }
             }
         }
@@ -670,11 +671,6 @@
                 document.getElementById('user-display').innerText = email;
                 document.getElementById('admin-login-view').classList.add('hidden');
                 document.getElementById('admin-dashboard-view').classList.remove('hidden');
-                const modalBox = document.getElementById('admin-modal-box');
-                if(modalBox) {
-                    modalBox.classList.remove('max-w-md');
-                    modalBox.classList.add('max-w-2xl');
-                }
                 renderAdminDashboard();
             } else {
                 alert('อีเมลหรือรหัสผ่านไม่ถูกต้อง!');
@@ -685,11 +681,6 @@
             localStorage.removeItem('lwsc_logged_in');
             document.getElementById('admin-login-view').classList.remove('hidden');
             document.getElementById('admin-dashboard-view').classList.add('hidden');
-            const modalBox = document.getElementById('admin-modal-box');
-            if(modalBox) {
-                modalBox.classList.remove('max-w-2xl');
-                modalBox.classList.add('max-w-md');
-            }
             document.getElementById('admin-email').value = '';
             document.getElementById('admin-password').value = '';
         }
@@ -851,7 +842,7 @@
         function deleteAdminItem(id) {
             let newData = JSON.parse(JSON.stringify(siteData));
             newData[currentTab] = (newData[currentTab] || []).filter(i => i.id !== id);
-            saveCloudData(newData);
+            saveData(newData);
             if (editingItemId === id) resetForm();
         }
 
@@ -966,7 +957,7 @@
                 }
             }
 
-            saveCloudData(newData);
+            saveData(newData);
             resetForm();
             renderAdminDashboard();
         }
@@ -982,7 +973,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            fetchCloudData();
+            loadData();
         });
     </script>
 </body>
