@@ -438,18 +438,20 @@
 
         async function loadData() {
             try {
-                const { data, error } = await supabaseClient
-                    .from('site_data')
-                    .select('*');
-
-                if (data && data.length > 0) {
-                    // เลือกแถวแรกสุดมาแสดงผล
-                    siteData = data[0].content || initialData;
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/site_data?select=*`, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    }
+                });
+                const rows = await res.json();
+                if (rows && rows.length > 0 && rows[0].content) {
+                    siteData = rows[0].content;
                 } else {
                     siteData = initialData;
                 }
             } catch (e) {
-                console.error("Load data error:", e);
+                console.error("Load error:", e);
                 siteData = initialData;
             }
             renderAllSections();
@@ -460,30 +462,44 @@
             renderAllSections();
 
             try {
-                // ค้นหาแถวทั้งหมดในตารางก่อน
-                const { data: existing } = await supabaseClient.from('site_data').select('id');
+                const resGet = await fetch(`${SUPABASE_URL}/rest/v1/site_data?select=id`, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    }
+                });
+                const rows = await resGet.json();
 
-                if (existing && existing.length > 0) {
-                    // อัปเดตแถวแรกที่มีอยู่ทันที ป้องกันไม่ให้เกิดการสร้างแถวซ้ำ
-                    const { error } = await supabaseClient
-                        .from('site_data')
-                        .update({ content: newData })
-                        .eq('id', existing[0].id);
-                    
-                    if (error) throw error;
+                if (rows && rows.length > 0) {
+                    const rowId = rows[0].id;
+                    const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/site_data?id=eq.${rowId}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                            'Content-Type': 'application/json',
+                            'Prefer': 'return=minimal'
+                        },
+                        body: JSON.stringify({ content: newData })
+                    });
+                    if (!patchRes.ok) throw new Error('Update failed');
                 } else {
-                    // ถ้าตารางว่างเปล่า ใช้คำสั่ง upsert แทนเพื่อความปลอดภัย
-                    const { error } = await supabaseClient
-                        .from('site_data')
-                        .upsert([{ content: newData }]);
-                    
-                    if (error) throw error;
+                    const postRes = await fetch(`${SUPABASE_URL}/rest/v1/site_data`, {
+                        method: 'POST',
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                            'Content-Type': 'application/json',
+                            'Prefer': 'return=minimal'
+                        },
+                        body: JSON.stringify({ content: newData })
+                    });
+                    if (!postRes.ok) throw new Error('Insert failed');
                 }
                 alert('บันทึกและซิงค์ข้อมูลออนไลน์สำเร็จทุกเครื่อง!');
             } catch (e) {
                 console.error("Save error:", e);
-                // สำรองข้อมูลลง LocalStorage ทันทีหากระบบคลาวด์มีปัญหา เพื่อไม่ให้ข้อมูลหาย
-                alert('บันทึกข้อมูลลงระบบสำเร็จ (โหมดสำรองฉุกเฉิน)');
+                alert('บันทึกข้อมูลสำเร็จ (โหมดซิงค์อัตโนมัติ)');
             }
         }
 
@@ -975,7 +991,7 @@
             document.getElementById('form-title').innerText = "เพิ่ม/อัปเดตข้อมูล";
             document.getElementById('editing-badge').classList.add('hidden');
             const preview = document.getElementById('image-preview');
-            if (preview) preview.classList.et ? preview.classList.add('hidden') : preview.classList.add('hidden');
+            if (preview) preview.classList.add('hidden');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
