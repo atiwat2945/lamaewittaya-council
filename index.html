@@ -460,24 +460,17 @@
             renderAllSections();
 
             try {
-                // ดึง id แถวแรกที่มีอยู่มาใช้
-                const { data: existing } = await supabaseClient.from('site_data').select('id').limit(1);
-                
-                let res;
-                if (existing && existing.length > 0) {
-                    // ถ้ามีแถวอยู่แล้ว ใช้วิธีอัปเดตตรงๆ ตาม id
-                    res = await supabaseClient
-                        .from('site_data')
-                        .update({ content: newData })
-                        .eq('id', existing[0].id);
-                } else {
-                    // ถ้ายังไม่มีแถวเลย ให้เพิ่มใหม่
-                    res = await supabaseClient
-                        .from('site_data')
-                        .insert([{ id: 1, content: newData }]);
-                }
+                // เคลียร์ข้อมูลเก่าทั้งหมดในตารางทิ้งก่อน เพื่อป้องกันปัญหา Key ซ้ำซ้อน
+                await supabaseClient.from('site_datafree').delete().neq('content', null);
+                // (หรือลบทุกแถวทิ้งด้วยคำสั่งกวาดล้าง)
+                await supabaseClient.from('site_data').delete().gte('id', 0);
 
-                if (res.error) throw res.error;
+                // เพิ่มข้อมูลก้อนใหม่ล่าสุดเข้าไปแทนที่ทันที
+                const { error } = await supabaseClient
+                    .from('site_data')
+                    .insert([{ content: newData }]);
+
+                if (error) throw error;
                 alert('บันทึกและซิงค์ข้อมูลออนไลน์สำเร็จทุกเครื่อง!');
             } catch (e) {
                 console.error("Save error:", e);
